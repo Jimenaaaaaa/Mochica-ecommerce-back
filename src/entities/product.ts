@@ -2,8 +2,8 @@ import { Artist } from './artist';
 
 export type Product = {
   name: string;
-  price: string;
+  price: number;
   cone: number;
   size: string;
-  Author: Artist;
+  author: Artist;
 };
