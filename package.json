@@ -1,5 +1,5 @@
 {
-  "name": "week6.server",
+  "name": "final_proyect_mochica",
   "version": "1.0.0",
   "description": "Node Server",
   "main": "index.js",
@@ -11,13 +11,13 @@
     "prebuild": "npm run copy-public",
     "build": "tsc -w",
     "test": "jest --watchAll --coverage",
-    "test:prod": "jest --watchAll --coverage --watchAll=false --passWithNoTest"
+    "test:prod": "jest --watchAll --coverage --watchAll=false --passWithNoTests"
   },
   "keywords": [
     "Node",
     "Server"
   ],
-  "author": "Alejandro Cerezo",
+  "author": "Jimena",
   "license": "ISC",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
