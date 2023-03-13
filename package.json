@@ -1,5 +1,5 @@
 {
-  "name": "week6.server",
+  "name": "final_proyect_mochica",
   "version": "1.0.0",
   "description": "Node Server",
   "main": "index.js",
@@ -17,7 +17,7 @@
     "Node",
     "Server"
   ],
-  "author": "Alejandro Cerezo",
+  "author": "Jimena",
   "license": "ISC",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
