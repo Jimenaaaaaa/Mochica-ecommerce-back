@@ -23,5 +23,5 @@ export type User = {
   street?: string;
   PC?: number;
   IBAN?: string;
-  CODE?: number;
+  Code?: number;
 };
