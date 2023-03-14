@@ -2,7 +2,7 @@ import { User } from '../../entities/user.js';
 import { Repo } from '../repo.interface.js';
 import { UserModel } from './users.mongo.model.js';
 import createDebug from 'debug';
-const debug = createDebug('CH5:repo:users');
+const debug = createDebug('FP:repo:users');
 
 export class UserMongoRepo implements Repo<User> {
   private static instance: UserMongoRepo;
@@ -45,11 +45,12 @@ export class UserMongoRepo implements Repo<User> {
   // }
 
   async search(query: { key: string; value: unknown }): Promise<User[]> {
-    const data: User[] = await UserModel.find({ [query.key]: query.value })
-      .populate('products', {
-        cart: 0,
-      })
-      .exec();
+    debug('entra al search');
+
+    const data: User[] = await UserModel.find({ [query.key]: query.value });
+    // .populate('cart')
+    // .exec();
+    debug('data: ', data);
     return data;
   }
 
