@@ -1,7 +1,7 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema, SchemaTypes } from 'mongoose';
 import { Product } from '../../entities/product';
 
-const userSchema = new Schema<Product>({
+const productSchema = new Schema<Product>({
   name: {
     type: String,
     required: true,
@@ -20,13 +20,13 @@ const userSchema = new Schema<Product>({
   },
   author: [
     {
-      type: Schema.Types.ObjectId,
+      type: SchemaTypes.ObjectId,
       ref: 'Artist',
     },
   ],
 });
 
-userSchema.set('toJSON', {
+productSchema.set('toJSON', {
   transform(_document, returnedObject) {
     returnedObject.id = returnedObject._id;
     delete returnedObject.__v;
@@ -34,4 +34,4 @@ userSchema.set('toJSON', {
   },
 });
 
-export const UserModel = model('Product', userSchema, 'products');
+export const UserModel = model('Product', productSchema, 'products');

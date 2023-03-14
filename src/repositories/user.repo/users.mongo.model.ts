@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema, SchemaTypes } from 'mongoose';
 import { User } from '../../entities/user';
 
 const userSchema = new Schema<User>({
@@ -41,7 +41,7 @@ const userSchema = new Schema<User>({
   },
   cart: [
     {
-      type: Schema.Types.ObjectId,
+      type: SchemaTypes.ObjectId,
       ref: 'Product',
     },
   ],
