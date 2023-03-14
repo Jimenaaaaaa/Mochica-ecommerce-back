@@ -3,7 +3,7 @@ import { config } from '../config.js';
 const { cluster, user, password, dbName } = config;
 
 import createDebug from 'debug';
-const debug = createDebug('FP:dbConnect');
+const debug = createDebug('FP: dbConnect');
 
 
 export const dbConnect = (env?: string) => {
