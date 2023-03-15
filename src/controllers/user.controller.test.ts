@@ -58,26 +58,26 @@ describe('Given the class UserController', () => {
       });
     });
 
-    // FIX THIS CODE
-    // describe('When no data is found ', () => {
-    //   test.only('Then expect next to have been called', async () => {
-    //     const req = {
-    //       body: {
-    //         email: 'test',
-    //         password: 'test',
-    //       },
-    //     } as unknown as Request;
-    //     await controller.login(req, resp, next);
-    //     (mockRepo.search as jest.Mock).mockResolvedValue([]);
-    //     expect(next).toHaveBeenLastCalledWith(
-    //       new HTTPError(
-    //         401,
-    //         'Incorrect email or password',
-    //         'Email or password not found'
-    //       )
-    //     );
-    //   });
-    // });
+    describe('When no data is found ', () => {
+      test('Then expect next to have been called', async () => {
+        (mockRepo.search as jest.Mock).mockResolvedValue([]);
+        const controller = new UserController(mockRepo);
+        const req = {
+          body: {
+            email: 'test',
+            password: 'test',
+          },
+        } as unknown as Request;
+        await controller.login(req, resp, next);
+        expect(next).toHaveBeenLastCalledWith(
+          new HTTPError(
+            401,
+            'Incorrect email or password',
+            'Email or password not found'
+          )
+        );
+      });
+    });
 
     // FIX THIS CODE
     //   describe('When the login password does not match with the repgistered ', () => {
@@ -96,8 +96,44 @@ describe('Given the class UserController', () => {
     //   });
 
     // FIX THIS CODE
-    //   describe('When all the data is valid', () => {
-    //     test('Then resp.json() should have been called', () => {});
-    //   });
+    describe('When all body password does not match the data password', () => {
+      test('Then resp.json() should have been called', async () => {
+        (mockRepo.search as jest.Mock).mockResolvedValue([{ password: '' }]);
+        const controller = new UserController(mockRepo);
+        const req = {
+          body: {
+            email: 'test',
+            password: 'test',
+          },
+        } as unknown as Request;
+
+        await controller.login(req, resp, next);
+        expect(next).toHaveBeenLastCalledWith(
+          new HTTPError(
+            401,
+            'Incorrect email or password',
+            'Email or password not found'
+          )
+        );
+      });
+    });
+
+    describe('When all the data is valid', () => {
+      test('Then resp.json() should have been called', async () => {
+        (mockRepo.search as jest.Mock).mockResolvedValue([
+          { password: 'test' },
+        ]);
+        const controller = new UserController(mockRepo);
+        const req = {
+          body: {
+            email: 'test',
+            password: 'test',
+          },
+        } as unknown as Request;
+
+        await controller.login(req, resp, next);
+        expect(resp.json).toHaveBeenCalled();
+      });
+    });
   });
 });
