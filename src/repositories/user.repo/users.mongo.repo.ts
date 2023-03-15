@@ -34,18 +34,6 @@ export class UserMongoRepo implements Repo<User> {
     return {} as User;
   }
 
-  // Voy a quitar el query id :
-  // async queryId(id: string): Promise<User> {
-  //   const data = await UserModel.findById(id)
-  //     .populate('products', {
-  //       cart: 0,
-  //     })
-  //     .exec();
-
-  //   if (!data) throw new Error();
-  //   return data;
-  // }
-
   async search(query: { key: string; value: unknown }): Promise<User[]> {
     debug('entra al search');
 

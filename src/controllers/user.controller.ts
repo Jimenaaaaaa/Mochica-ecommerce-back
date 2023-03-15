@@ -38,6 +38,8 @@ export class UserController {
           'Incorrect email or password',
           'Email or password not found'
         );
+
+      // Esto lo tengo que cambiar cuando haga el register
       // If (!(await Auth.compare(req.body.password, data[0].password)))
       //   throw new Error();
 

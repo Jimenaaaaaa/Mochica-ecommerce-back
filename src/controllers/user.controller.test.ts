@@ -33,7 +33,7 @@ describe('Given the class UserController', () => {
 
   describe('When we call the "login"  method ', () => {
     describe('When the email or the password are not valid ', () => {
-      test.only('Then expect next to have been called', async () => {
+      test('Then expect next to have been called', async () => {
         const reqFail = {
           body: {},
         } as unknown as Request;
@@ -45,9 +45,22 @@ describe('Given the class UserController', () => {
       });
     });
 
-    // Add later the rest of the test
-    // describe('When the email and password are valid ', () => {
-    //   test('Then expect the method "search" to be called', async () => {
+    describe('When the email and password are valid ', () => {
+      test('Then expect the method "search" to be called', async () => {
+        const req = {
+          body: {
+            email: 'test',
+            password: 'test',
+          },
+        } as unknown as Request;
+        await controller.login(req, resp, next);
+        expect(mockRepo.search).toHaveBeenCalled();
+      });
+    });
+
+    // FIX THIS CODE
+    // describe('When no data is found ', () => {
+    //   test.only('Then expect next to have been called', async () => {
     //     const req = {
     //       body: {
     //         email: 'test',
@@ -55,24 +68,18 @@ describe('Given the class UserController', () => {
     //       },
     //     } as unknown as Request;
     //     await controller.login(req, resp, next);
-    //     expect(mockRepo.search).toHaveBeenCalled();
+    //     (mockRepo.search as jest.Mock).mockResolvedValue([]);
+    //     expect(next).toHaveBeenLastCalledWith(
+    //       new HTTPError(
+    //         401,
+    //         'Incorrect email or password',
+    //         'Email or password not found'
+    //       )
+    //     );
     //   });
     // });
 
-    //   describe('When no data is found ', () => {
-    //     test('Then expect next to have been called', async () => {
-    //       const req = {
-    //         body: {
-    //           email: 'test',
-    //           password: 'test',
-    //         },
-    //       } as unknown as Request;
-    //       await controller.login(req, resp, next);
-    //       (mockRepo.search as jest.Mock).mockResolvedValue([]);
-    //       expect(next).toHaveBeenLastCalledWith(new Error());
-    //     });
-    //   });
-
+    // FIX THIS CODE
     //   describe('When the login password does not match with the repgistered ', () => {
     //     test('Then  it should throw an error', async () => {
     //       const req = {
@@ -81,15 +88,14 @@ describe('Given the class UserController', () => {
     //           password: 'test',
     //         },
     //       } as unknown as Request;
-
     //       (mockRepo.search as jest.Mock).mockResolvedValue([{}]);
     //       Auth.compare = jest.fn().mockResolvedValue(true);
     //       await controller.login(req, resp, next);
-
     //       expect(next).toHaveBeenCalled();
     //     });
     //   });
 
+    // FIX THIS CODE
     //   describe('When all the data is valid', () => {
     //     test('Then resp.json() should have been called', () => {});
     //   });
