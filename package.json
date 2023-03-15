@@ -9,6 +9,7 @@
     "start": "cross-env DEBUG=FP* PORT=4500 node ./dist/index.js -w",
     "start:mon": "cross-env DEBUG=FP* PORT=4500 nodemon ./dist/index.js",
     "build": "tsc -w",
+    "build:prod": "tsc"
     "test": "jest --watchAll --coverage",
     "test:prod": "jest --watchAll --coverage --watchAll=false --passWithNoTests"
   },
