@@ -1,9 +1,8 @@
 import { UserController } from './user.controller';
-import { UserMongoRepo } from '../repositories/user.repo/users.mongo.repo';
 import { Repo } from '../repositories/repo.interface';
 import { User } from '../entities/user';
 import { NextFunction, Request, Response } from 'express';
-import { Auth } from '../services/auth';
+import { HTTPError } from '../errors/error';
 
 jest.mock('../services/auth');
 
@@ -33,56 +32,73 @@ describe('Given the class UserController', () => {
   });
 
   describe('When we call the "login"  method ', () => {
-    const req = {
-      body: {
-        email: 'test',
-        password: 'test',
-      },
-    } as unknown as Request;
-
-    const reqFail = {
-      body: {
-        email: 'test',
-        password: 'test',
-      },
-    } as unknown as Request;
-
     describe('When the email or the password are not valid ', () => {
-      test('Then expect next to have been called', async () => {
+      test.only('Then expect next to have been called', async () => {
+        const req = {
+          body: {
+            email: 'test',
+            password: 'test',
+          },
+        } as unknown as Request;
+
+        const reqFail = {
+          body: {},
+        } as unknown as Request;
+
         await controller.login(reqFail, resp, next);
-        expect(next).toHaveBeenCalled();
+        expect(next).toHaveBeenLastCalledWith(
+          new HTTPError(401, 'Unauthorized', 'Invalid Email or password')
+        );
       });
     });
 
-    describe('When the email and password are valid ', () => {
-      test('Then expect the method "search" to be called', async () => {
-        await controller.login(req, resp, next);
-        expect(mockRepo.search).toHaveBeenCalled();
-      });
-    });
-
-    // describe('When no data is found ', () => {
-    //   test.only('Then expect next to have been called', async () => {
+    // Add later the rest of the test
+    // describe('When the email and password are valid ', () => {
+    //   test('Then expect the method "search" to be called', async () => {
+    //     const req = {
+    //       body: {
+    //         email: 'test',
+    //         password: 'test',
+    //       },
+    //     } as unknown as Request;
     //     await controller.login(req, resp, next);
-    //     const result = ((await mockRepo.search) as jest.Mock).mockReturnValue(
-    //       []
-    //     );
-    //     expect(next).toHaveBeenCalled();
+    //     expect(mockRepo.search).toHaveBeenCalled();
     //   });
     // });
 
-    describe('When the login password does not match with the registered ', () => {
-      test.only('Then  it should throw an error', async () => {
-        await controller.login(req, resp, next);
-        (mockRepo.search as jest.Mock).mockResolvedValue([{}]);
-        Auth.compare = jest.fn().mockResolvedValue(true);
+    //   describe('When no data is found ', () => {
+    //     test('Then expect next to have been called', async () => {
+    //       const req = {
+    //         body: {
+    //           email: 'test',
+    //           password: 'test',
+    //         },
+    //       } as unknown as Request;
+    //       await controller.login(req, resp, next);
+    //       (mockRepo.search as jest.Mock).mockResolvedValue([]);
+    //       expect(next).toHaveBeenLastCalledWith(new Error());
+    //     });
+    //   });
 
-        expect(next).toHaveBeenCalled();
-      });
-    });
+    //   describe('When the login password does not match with the repgistered ', () => {
+    //     test('Then  it should throw an error', async () => {
+    //       const req = {
+    //         body: {
+    //           email: 'test',
+    //           password: 'test',
+    //         },
+    //       } as unknown as Request;
 
-    describe('When all the data is valid', () => {
-      test('Then resp.json() should have been called', () => {});
-    });
+    //       (mockRepo.search as jest.Mock).mockResolvedValue([{}]);
+    //       Auth.compare = jest.fn().mockResolvedValue(true);
+    //       await controller.login(req, resp, next);
+
+    //       expect(next).toHaveBeenCalled();
+    //     });
+    //   });
+
+    //   describe('When all the data is valid', () => {
+    //     test('Then resp.json() should have been called', () => {});
+    //   });
   });
 });

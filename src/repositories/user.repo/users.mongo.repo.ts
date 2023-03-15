@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { User } from '../../entities/user.js';
 import { Repo } from '../repo.interface.js';
 import { UserModel } from './users.mongo.model.js';
@@ -21,7 +22,7 @@ export class UserMongoRepo implements Repo<User> {
   }
 
   async query(): Promise<User[]> {
-    const data = await UserModel.find()
+    const data: User[] = await UserModel.find()
       .populate('products', {
         cart: 0,
       })

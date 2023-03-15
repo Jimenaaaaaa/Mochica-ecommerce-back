@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import cors from 'cors';
 import createDebug from 'debug';
 import express from 'express';

@@ -6,7 +6,8 @@ export const usersRouter = router();
 const repo = UserMongoRepo.getInstance();
 const controller = new UserController(repo);
 
-// Todo usersRouter.get('/', controller.getAll.bind(controller));
+// Para hacerlo despues del login
+// usersRouter.get('/', controller.getAll.bind(controller));
 // usersRouter.patch('/', Interceptors.logged, controller.edit.bind(controller));
 // usersRouter.patch(
 //   '/cart',
@@ -15,4 +16,5 @@ const controller = new UserController(repo);
 //   controller.editCart.bind(controller)
 // );
 usersRouter.post('/login', controller.login.bind(controller));
-// Todo usersRouter.post('/register', controller.register.bind(controller));
+// Para hacerlo despues del login
+// usersRouter.post('/register', controller.register.bind(controller));
