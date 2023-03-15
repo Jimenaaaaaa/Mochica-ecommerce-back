@@ -29,6 +29,8 @@ const productSchema = new Schema<Product>({
 productSchema.set('toJSON', {
   transform(_document, returnedObject) {
     returnedObject.id = returnedObject._id;
+    // Ver si lo del role funciona
+    delete returnedObject.role;
     delete returnedObject.__v;
     delete returnedObject._id;
   },

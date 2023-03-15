@@ -19,6 +19,7 @@ export type User = {
   email: string;
   password: string;
   cart: Product[];
+  role: string;
   city?: string;
   street?: string;
   PC?: number;
