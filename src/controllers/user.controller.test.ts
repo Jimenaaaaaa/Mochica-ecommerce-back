@@ -34,13 +34,6 @@ describe('Given the class UserController', () => {
   describe('When we call the "login"  method ', () => {
     describe('When the email or the password are not valid ', () => {
       test.only('Then expect next to have been called', async () => {
-        const req = {
-          body: {
-            email: 'test',
-            password: 'test',
-          },
-        } as unknown as Request;
-
         const reqFail = {
           body: {},
         } as unknown as Request;
