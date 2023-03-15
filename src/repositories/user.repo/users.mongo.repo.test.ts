@@ -81,7 +81,7 @@ describe('Given UserMongoRepo', () => {
     test('Then if it cant find the id, it should throw an error', () => {
       const id = '1';
       (UserModel.findByIdAndDelete as jest.Mock).mockReturnValue(null);
-      expect(async () => await repo.erase(id)).rejects.toThrow();
+      expect(async () => repo.erase(id)).rejects.toThrow();
     });
 
     test('Then if it has an object to delete with its ID, the findByIdAndDelete function should be called', async () => {
