@@ -5,5 +5,11 @@ export default {
   testPathIgnorePatterns: ['dist'],
   resolver: 'jest-ts-webcompat-resolver',
   collectCoverageFrom: ['src/**/*.ts'],
-  coveragePathIgnorePatterns: ['index.ts', 'app.ts', 'config.ts', 'routers'],
+  coveragePathIgnorePatterns: [
+    'index.ts',
+    'app.ts',
+    'config.ts',
+    'routers',
+    'entities',
+  ],
 };
