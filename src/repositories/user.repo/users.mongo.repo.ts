@@ -2,6 +2,7 @@ import { User } from '../../entities/user.js';
 import { Repo } from '../repo.interface.js';
 import { UserModel } from './users.mongo.model.js';
 import createDebug from 'debug';
+import { HTTPError } from '../../errors/error.js';
 const debug = createDebug('FP:repo:users');
 
 export class UserMongoRepo implements Repo<User> {
@@ -65,13 +66,14 @@ export class UserMongoRepo implements Repo<User> {
     const data = await UserModel.findByIdAndUpdate(info.id, info, {
       new: true,
     });
-    if (!data) throw new Error();
+    if (!data) throw new HTTPError(404, 'Not found', 'Id not found in update');
     return data as User;
   }
 
   async erase(id: string): Promise<void> {
     debug('erase');
     const data = UserModel.findByIdAndDelete(id);
-    if (!data) throw new Error();
+    if (!data)
+      throw new HTTPError(404, 'Not found', 'Delete not posible: id not found');
   }
 }
