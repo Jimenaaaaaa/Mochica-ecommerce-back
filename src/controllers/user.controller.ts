@@ -43,7 +43,7 @@ export class UserController {
       const payload: PayloadToken = {
         id: data[0].id,
         email: data[0].email,
-        role: 'admin',
+        role: 'user',
       };
       const token = Auth.createJWT(payload);
       resp.status(202);
