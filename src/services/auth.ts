@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import createDebug from 'debug';
 import { config } from '../config.js';
-const debug = createDebug('W6:services:auth');
+import { HTTPError } from '../errors/error.js';
+const debug = createDebug('FP:services:auth');
 
 debug('Loaded');
 
@@ -22,9 +23,7 @@ export class Auth {
   static verifyJWTGettingPayload(token: string) {
     const result = jwt.verify(token, config.jwtSecret as string);
     if (typeof result === 'string')
-      // A;adir despues
-      // throw new HTTPError(498, 'Invalid payload', result);
-      throw new Error();
+      throw new HTTPError(498, 'Invalid payload', result);
     return result as PayloadToken;
   }
 
