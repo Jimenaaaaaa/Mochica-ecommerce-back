@@ -24,6 +24,15 @@ const corsOptions = {
 
 app.use('/users', usersRouter);
 
+app.get('/', (_req, resp) => {
+  resp.json({
+    info: 'Mochica shop',
+    endpoints: {
+      users: '/users',
+    },
+  });
+});
+
 // Luego meto el resto de routers:
 // app.use('/products', productsRouter);
 // app.use('/artists', artistsRouter);
