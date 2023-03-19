@@ -12,10 +12,26 @@ export class UserController {
     debug('Instantiate');
   }
 
+  async register(req: Request, resp: Response, next: NextFunction) {
+    try {
+      debug('register');
+
+      req.body.password = await Auth.hash(req.body.password);
+      const data = await this.repo.create(req.body);
+
+      resp.status(201);
+      resp.json({
+        results: data,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async login(req: Request, resp: Response, next: NextFunction) {
     try {
       debug('login');
-      // Login recibe un email y un password.
+
       if (!req.body.email || !req.body.password)
         throw new HTTPError(401, 'Unauthorized', 'Invalid Email or password');
       const data = await this.repo.search({
@@ -29,16 +45,13 @@ export class UserController {
           'Incorrect email or password',
           'Email or password not found'
         );
-      // Esto lo tengo que cambiar cuando haga el register
-      if (req.body.password !== data[0].password)
+
+      if (!(await Auth.compare(req.body.password, data[0].password)))
         throw new HTTPError(
           401,
           'Incorrect email or password',
           'Email or password not found'
         );
-      // Esto lo tengo que cambiar cuando haga el register
-      // If (!(await Auth.compare(req.body.password, data[0].password)))
-      //   throw new Error();
 
       const payload: PayloadToken = {
         id: data[0].id,
@@ -49,6 +62,7 @@ export class UserController {
       resp.status(202);
       resp.json({
         token,
+        user: data,
       });
     } catch (error) {
       next(error);
