@@ -17,4 +17,4 @@ const controller = new UserController(repo);
 // );
 usersRouter.post('/login', controller.login.bind(controller));
 // Para hacerlo despues del login
-// usersRouter.post('/register', controller.register.bind(controller));
+usersRouter.post('/register', controller.register.bind(controller));
