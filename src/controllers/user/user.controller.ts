@@ -1,9 +1,9 @@
 import { Response, Request, NextFunction } from 'express';
-import { User } from '../entities/user.js';
-import { Auth, PayloadToken } from '../services/auth.js';
-import { Repo } from '../repositories/repo.interface.js';
+import { Auth, PayloadToken } from '../../services/auth.js';
 import createDebug from 'debug';
-import { HTTPError } from '../errors/error.js';
+import { Repo } from '../../repositories/repo.interface.js';
+import { HTTPError } from '../../errors/error.js';
+import { User } from '../../entities/user.js';
 
 const debug = createDebug('FP: User Controller');
 

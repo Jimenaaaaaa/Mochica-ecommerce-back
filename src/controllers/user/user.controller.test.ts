@@ -1,8 +1,8 @@
 import { UserController } from './user.controller';
-import { Repo } from '../repositories/repo.interface';
-import { User } from '../entities/user';
+import { Repo } from '../../repositories/repo.interface';
+import { User } from '../../entities/user';
 import { NextFunction, Request, Response } from 'express';
-import { HTTPError } from '../errors/error';
+import { HTTPError } from '../../errors/error';
 
 jest.mock('../services/auth');
 
