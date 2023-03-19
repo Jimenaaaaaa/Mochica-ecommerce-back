@@ -3,6 +3,7 @@ import cors from 'cors';
 import createDebug from 'debug';
 import express from 'express';
 import morgan from 'morgan';
+import { productsRouter } from './routers/products.router.js';
 import { usersRouter } from './routers/users.router.js';
 
 // Luego meto los imports de los routers
@@ -23,6 +24,7 @@ const corsOptions = {
 };
 
 app.use('/users', usersRouter);
+app.use('/products', productsRouter);
 
 app.get('/', (_req, resp) => {
   resp.json({
