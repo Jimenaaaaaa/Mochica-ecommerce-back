@@ -15,9 +15,11 @@ export class UserController {
   async register(req: Request, resp: Response, next: NextFunction) {
     try {
       debug('register');
-
       req.body.password = await Auth.hash(req.body.password);
       const data = await this.repo.create(req.body);
+      if (!data) {
+        throw new HTTPError(401, 'Unauthorized', 'Invalid Email or password');
+      }
 
       resp.status(201);
       resp.json({
