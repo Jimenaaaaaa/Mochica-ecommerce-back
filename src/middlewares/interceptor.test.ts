@@ -1,8 +1,8 @@
 import { NextFunction, Response } from 'express';
-import { Auth, PayloadToken } from '../../services/auth.js';
+import { Auth, PayloadToken } from '../services/auth.js';
 import { Interceptors, RequestPlus } from './interceptor.js';
 
-jest.mock('../../services/auth.js');
+jest.mock('../services/auth.js');
 
 const mockReq = {
   get: jest.fn(),
@@ -10,7 +10,7 @@ const mockReq = {
 const mockResp = {} as Response;
 const next = jest.fn() as NextFunction;
 
-jest.mock('../../config.js', () => ({
+jest.mock('../config.js', () => ({
   _dirname: 'test',
   config: {
     secret: 'test',

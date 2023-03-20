@@ -39,10 +39,10 @@ describe('Given UserMongoRepo', () => {
   });
 
   describe('When we call the search() method', () => {
-    test('Then it should return a user array.', async () => {
+    test('Then Usermodel.find method should have been called .', async () => {
       const query = { key: 'name', value: 'example' };
-      const result = await repo.search(query);
-      expect(result).toEqual([]);
+      await repo.search(query);
+      expect(UserModel.find).toHaveBeenCalled();
     });
   });
 

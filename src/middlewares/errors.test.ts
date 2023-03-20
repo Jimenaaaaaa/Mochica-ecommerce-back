@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { errorsMiddleware } from './errors';
 import { Error as MongooseError } from 'mongoose';
-import { HTTPError } from '../../errors/error';
-
+import { HTTPError } from '../errors/error';
 
 describe('Given errorsMiddleware ', () => {
   const req = {} as unknown as Request;
@@ -16,18 +15,16 @@ describe('Given errorsMiddleware ', () => {
 
   describe('When error is a mongoose castError ', () => {
     test('Then status should throw a 400 error ', () => {
-      // Arrange
+
       const error = new MongooseError.CastError('', '', '');
-      // Act -> Lo que quiero probar
       errorsMiddleware(error, req, resp, next);
       expect(resp.status).toHaveBeenCalledWith(400);
     });
   });
   describe('When error is a mongoose validation Error ', () => {
     test('Then it should throw a 406 error ', () => {
-      // Arrange
+
       const error = new MongooseError.ValidationError();
-      // Act -> Lo que quiero probar
       errorsMiddleware(error, req, resp, next);
       expect(resp.status).toHaveBeenLastCalledWith(406);
     });

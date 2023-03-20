@@ -1,14 +1,13 @@
-
 import { NextFunction, Request, Response } from 'express';
 import createDebug from 'debug';
 
 // Cuando no hay casting
 import { Error } from 'mongoose';
-import { CustomError, HTTPError } from '../../errors/error';
+import { CustomError, HTTPError } from '../errors/error';
 
 // Paso aqui el que va a gestionarme los errores para que app quede limpia
 
-const debug = createDebug('CH5:app:errors');
+const debug = createDebug('FP:app:errors');
 
 export const errorsMiddleware = (
   error: CustomError | Error,

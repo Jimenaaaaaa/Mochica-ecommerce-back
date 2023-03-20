@@ -1,4 +1,4 @@
-import { model, Schema, SchemaTypes } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import { Product } from '../../entities/product';
 
 const productSchema = new Schema<Product>({
@@ -20,7 +20,7 @@ const productSchema = new Schema<Product>({
   },
   author: [
     {
-      type: SchemaTypes.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Artist',
     },
   ],
@@ -36,4 +36,4 @@ productSchema.set('toJSON', {
   },
 });
 
-export const UserModel = model('Product', productSchema, 'products');
+export const ProductModel = model('Product', productSchema, 'products');

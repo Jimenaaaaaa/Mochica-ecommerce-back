@@ -1,10 +1,9 @@
-import { UserController } from './user.controller';
-import { Repo } from '../repositories/repo.interface';
-import { User } from '../entities/user';
+import { UserController } from './user.controller.js';
+import { Repo } from '../../repositories/repo.interface.js';
+import { User } from '../../entities/user.js';
 import { NextFunction, Request, Response } from 'express';
-import { HTTPError } from '../errors/error';
-
-jest.mock('../services/auth');
+import { HTTPError } from '../../errors/error.js';
+import { Auth } from '../../services/auth.js';
 
 const mockRepo = {
   query: jest.fn(),
@@ -31,6 +30,39 @@ describe('Given the class UserController', () => {
     });
   });
 
+  describe('When we call the "register" method ', () => {
+    describe('When there is an error ', () => {
+      test('Then next should have been thrown', async () => {
+        const reqFail = {
+          body: {},
+        } as unknown as Request;
+        await controller.register(reqFail, resp, next);
+        (mockRepo.create as jest.Mock).mockResolvedValue(null);
+        expect(next).toHaveBeenCalled();
+      });
+    });
+
+    describe('When all the data is ok ', () => {
+      test('Then resp.json should have been called', async () => {
+        const req = {
+          body: {
+            email: 'test',
+            password: 'test',
+          },
+        } as unknown as Request;
+
+        Auth.hash = jest.fn().mockResolvedValue('testo');
+        (mockRepo.create as jest.Mock).mockResolvedValue({
+          email: 'test',
+          password: 'test',
+        });
+
+        await controller.register(req, resp, next);
+        expect(mockRepo.create).toHaveBeenCalled();
+        expect(resp.json).toHaveBeenCalled();
+      });
+    });
+  });
   describe('When we call the "login"  method ', () => {
     describe('When the email or the password are not valid ', () => {
       test('Then expect next to have been called', async () => {
@@ -79,23 +111,6 @@ describe('Given the class UserController', () => {
       });
     });
 
-    // FIX THIS CODE
-    //   describe('When the login password does not match with the repgistered ', () => {
-    //     test('Then  it should throw an error', async () => {
-    //       const req = {
-    //         body: {
-    //           email: 'test',
-    //           password: 'test',
-    //         },
-    //       } as unknown as Request;
-    //       (mockRepo.search as jest.Mock).mockResolvedValue([{}]);
-    //       Auth.compare = jest.fn().mockResolvedValue(true);
-    //       await controller.login(req, resp, next);
-    //       expect(next).toHaveBeenCalled();
-    //     });
-    //   });
-
-    // FIX THIS CODE
     describe('When all body password does not match the data password', () => {
       test('Then resp.json() should have been called', async () => {
         (mockRepo.search as jest.Mock).mockResolvedValue([{ password: '' }]);
@@ -120,16 +135,17 @@ describe('Given the class UserController', () => {
 
     describe('When all the data is valid', () => {
       test('Then resp.json() should have been called', async () => {
-        (mockRepo.search as jest.Mock).mockResolvedValue([
-          { password: 'test' },
-        ]);
-        const controller = new UserController(mockRepo);
         const req = {
           body: {
             email: 'test',
             password: 'test',
           },
         } as unknown as Request;
+        (mockRepo.search as jest.Mock).mockResolvedValue([
+          { password: 'test' },
+        ]);
+        Auth.compare = jest.fn().mockResolvedValue(true);
+        const controller = new UserController(mockRepo);
 
         await controller.login(req, resp, next);
         expect(resp.json).toHaveBeenCalled();

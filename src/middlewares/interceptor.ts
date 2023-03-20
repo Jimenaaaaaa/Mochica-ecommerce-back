@@ -1,7 +1,7 @@
 import createDebug from 'debug';
 import { Response, NextFunction, Request } from 'express';
-import { HTTPError } from '../../errors/error.js';
-import { Auth, PayloadToken } from '../../services/auth.js';
+import { HTTPError } from '../errors/error.js';
+import { Auth, PayloadToken } from '../services/auth.js';
 
 const debug = createDebug('w6:interceptor');
 
