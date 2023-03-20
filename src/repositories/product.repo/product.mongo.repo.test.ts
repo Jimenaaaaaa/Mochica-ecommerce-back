@@ -42,6 +42,12 @@ describe('Given ProductMongoRepo', () => {
       expect(ProductModel.findById).toHaveBeenCalled();
       expect(result).toEqual([]);
     });
+
+    test('Then if the id is not found, it should throw an error', async () => {
+      const id = '';
+      (ProductModel.findById as jest.Mock).mockReturnValue(null);
+      expect(async () => repo.queryId(id)).rejects.toThrow();
+    });
   });
 
   describe('When we call the search() method', () => {
