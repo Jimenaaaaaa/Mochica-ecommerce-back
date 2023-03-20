@@ -1,8 +1,8 @@
 import { Response, Request } from 'express';
-import { Product } from '../../entities/product';
-import { RequestPlus } from '../../middlewares/interceptor';
-import { ProductMongoRepo } from '../../repositories/product.repo/product.mongo.repo';
-import { ProductController } from './product.controller';
+import { Product } from '../../entities/product.js';
+import { RequestPlus } from '../../middlewares/interceptor.js';
+import { ProductMongoRepo } from '../../repositories/product.repo/product.mongo.repo.js';
+import { ProductController } from './product.controller.js';
 
 describe('Given the ProductsController', () => {
   const mockProductsRepo: ProductMongoRepo = {

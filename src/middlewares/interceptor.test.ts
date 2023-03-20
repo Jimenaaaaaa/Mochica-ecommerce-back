@@ -2,7 +2,7 @@ import { NextFunction, Response } from 'express';
 import { Auth, PayloadToken } from '../services/auth.js';
 import { Interceptors, RequestPlus } from './interceptor.js';
 
-jest.mock('../../services/auth.js');
+jest.mock('../services/auth.js');
 
 const mockReq = {
   get: jest.fn(),

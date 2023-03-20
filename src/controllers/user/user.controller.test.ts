@@ -1,10 +1,10 @@
-import { UserController } from './user.controller';
-import { Repo } from '../../repositories/repo.interface';
-import { User } from '../../entities/user';
+import { UserController } from './user.controller.js';
+import { Repo } from '../../repositories/repo.interface.js';
+import { User } from '../../entities/user.js';
 import { NextFunction, Request, Response } from 'express';
-import { HTTPError } from '../../errors/error';
+import { HTTPError } from '../../errors/error.js';
 
-jest.mock('../services/auth');
+jest.mock('../services/auth.js');
 
 const mockRepo = {
   query: jest.fn(),

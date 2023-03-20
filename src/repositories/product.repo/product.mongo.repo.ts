@@ -22,20 +22,20 @@ export class ProductMongoRepo implements Repo<Product> {
   }
 
   async query(): Promise<Product[]> {
-    const data: Product[] = await ProductModel.find();
-    // .populate('products', {
-    //   author: {},
-    // })
-    // .exec();
+    const data: Product[] = await ProductModel.find()
+      .populate('products', {
+        author: {},
+      })
+      .exec();
     return data;
   }
 
   async queryId(id: string): Promise<Product> {
     debug('queryId: ' + id);
-    const data = await ProductModel.findById(id);
-    // Problems in posman
-    // .populate('products', { author: {} })
-    // .exec();
+    const data = await ProductModel.findById(id)
+      // Problems in posman
+      .populate('products', { author: {} })
+      .exec();
     if (!data) throw new HTTPError(404, 'Id not found', 'Id not found');
     return data;
   }
@@ -44,11 +44,11 @@ export class ProductMongoRepo implements Repo<Product> {
     debug('search');
     const data: Product[] = await ProductModel.find({
       [query.key]: query.value,
-    });
+    })
 
-    // Esto me da problemas
-    // .populate('owner')
-    // .exec();
+      // Esto me da problemas
+      .populate('owner')
+      .exec();
     return data;
   }
 
