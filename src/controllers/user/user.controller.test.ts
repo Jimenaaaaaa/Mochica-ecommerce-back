@@ -36,7 +36,6 @@ describe('Given the class UserController', () => {
         const reqFail = {
           body: {},
         } as unknown as Request;
-
         await controller.register(reqFail, resp, next);
         (mockRepo.create as jest.Mock).mockResolvedValue(null);
         expect(next).toHaveBeenCalled();
