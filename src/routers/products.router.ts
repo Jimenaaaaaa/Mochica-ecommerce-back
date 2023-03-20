@@ -10,7 +10,7 @@ const repo = ProductMongoRepo.getInstance();
 const controller = new ProductController(repo);
 
 productsRouter.get('/', controller.getAll.bind(controller));
-productsRouter.get('/:id', controller.getId.bind(controller));
+productsRouter.get('/:id', controller.getById.bind(controller));
 productsRouter.post(
   '/add',
   Interceptors.logged,
@@ -23,12 +23,12 @@ productsRouter.patch(
   controller.edit.bind(controller)
 );
 
-// // productsRouter.delete(
-// //   '/delete',
-// //   Interceptors.logged,
-// //   Interceptors.authorized,
-// //   controller.delete.bind(controller)
-// // );
+productsRouter.delete(
+  '/delete',
+  Interceptors.logged,
+  // Authorized
+  controller.delete.bind(controller)
+);
 
 // // El filtro es un get,asi que puedo filtrarlo en el front.
 // productsRouter.get('/:filter/:type', controller.getByFilter.bind(controller)); // Este puede que lo quite
