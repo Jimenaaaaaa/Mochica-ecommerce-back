@@ -40,7 +40,7 @@ export class ProductController {
       debug('getAll');
       const data = await this.ProductsRepo.query();
       resp.json({
-        results: data,
+        results: [data],
       });
     } catch (error) {
       next(error);
@@ -82,18 +82,16 @@ export class ProductController {
     // );
   }
 
-  async getId(req: Request, resp: Response, next: NextFunction) {
+  async getById(req: Request, resp: Response, next: NextFunction) {
     try {
       debug('getId-method');
-
       if (!req.params.id)
         throw new HTTPError(404, 'Not found', 'Not found guitar ID in params');
 
       const result = await this.ProductsRepo.queryId(req.params.id);
-
       resp.status(201);
       resp.json({
-        results: [result],
+        results: result,
       });
     } catch (error) {
       next(error);
@@ -103,14 +101,9 @@ export class ProductController {
   async edit(req: Request, resp: Response, next: NextFunction) {
     try {
       debug('edit-method');
-
-      if (!req.params.id)
-        throw new HTTPError(404, 'Not found', 'Id ');
-
+      if (!req.params.id) throw new HTTPError(404, 'Not found', 'Id ');
       req.body.id = req.params.id;
-
       const data = await this.ProductsRepo.update(req.body);
-
       resp.status(201);
       resp.json({
         results: [data],
