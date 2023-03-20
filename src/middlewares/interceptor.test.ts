@@ -10,7 +10,7 @@ const mockReq = {
 const mockResp = {} as Response;
 const next = jest.fn() as NextFunction;
 
-jest.mock('../../config.js', () => ({
+jest.mock('../config.js', () => ({
   _dirname: 'test',
   config: {
     secret: 'test',
