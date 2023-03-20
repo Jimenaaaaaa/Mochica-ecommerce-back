@@ -55,18 +55,14 @@ export class ProductController {
     //     'Wrong page number',
     //     'The page number in query params is not correct'
     //   );
-
     // const style = req.query.style || 'All';
-
     // if (style !== 'Electric' && style !== 'Acoustic' && style !== 'All')
     //   throw new HTTPError(
     //     400,
     //     'Wrong style type',
     //     'The style in query params is not correct'
     //   );
-
     // let productsFiltered: Product[];
-
     // if (style === 'All') {
     //   productsFiltered = await this.ProductsRepo.query();
     // } else {
@@ -75,7 +71,6 @@ export class ProductController {
     //     value: style,
     //   });
     // }
-
     // const productsData = productsFiltered.slice(
     //   (pageNumber - 1) * 5,
     //   pageNumber * 5

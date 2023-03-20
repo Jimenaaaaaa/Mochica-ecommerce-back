@@ -30,5 +30,5 @@ productsRouter.delete(
   controller.delete.bind(controller)
 );
 
-// // El filtro es un get,asi que puedo filtrarlo en el front.
+// El filtro es un get,asi que puedo filtrarlo en el front.
 // productsRouter.get('/:filter/:type', controller.getByFilter.bind(controller)); // Este puede que lo quite
