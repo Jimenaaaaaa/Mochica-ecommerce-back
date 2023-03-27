@@ -1,5 +1,6 @@
 import { Response, Request } from 'express';
 import { Product } from '../../entities/product.js';
+import { HTTPError } from '../../errors/error.js';
 import { RequestPlus } from '../../middlewares/interceptor.js';
 import { ProductMongoRepo } from '../../repositories/product.repo/product.mongo.repo.js';
 import { ProductController } from './product.controller.js';
@@ -27,10 +28,95 @@ describe('Given the ProductsController', () => {
   const controller = new ProductController(mockProductsRepo);
 
   describe('When the getAll method is called', () => {
-    test('And all the data is OK', async () => {
-      const req = {} as unknown as Request;
+    test('And all the data is OK, then query should have been called', async () => {
+      const req = {
+        body: {},
+        params: { id: '' },
+        query: {
+          filter: 'all',
+          page: 1,
+        },
+      } as unknown as Request;
       await controller.getAll(req, resp, next);
       expect(mockProductsRepo.query).toHaveBeenCalled();
+    });
+
+    test('if filter is something else than the required filters', async () => {
+      const req = {
+        body: {},
+        params: { id: '' },
+        query: {
+          filter: 'pot',
+          page: 1,
+        },
+      } as unknown as Request;
+      await controller.getAll(req, resp, next);
+      expect(next).toHaveBeenCalledWith(
+        new HTTPError(400, 'Wrong region', 'Non existing region')
+      );
+    });
+
+    test('if page is less than 1', async () => {
+      const req = {
+        body: {},
+        params: { id: '' },
+        query: {
+          filter: 'all',
+          page: '0',
+        },
+      } as unknown as Request;
+
+      (mockProductsRepo.query as jest.Mock).mockResolvedValue([{}]);
+
+      await controller.getAll(req, resp, next);
+      expect(next).toHaveBeenCalledWith(
+        new HTTPError(400, 'Wrong page', 'Page doesnt exist')
+      );
+    });
+
+    test('Then if filter is not "all", search method should have been called ', async () => {
+      const req = {
+        body: {},
+        params: { id: '' },
+        query: {
+          filter: 'mug',
+          page: 1,
+        },
+      } as unknown as Request;
+
+      (mockProductsRepo.search as jest.Mock).mockResolvedValue([]);
+
+      await controller.getAll(req, resp, next);
+      expect(mockProductsRepo.search).toHaveBeenCalled();
+    });
+
+    test('Then if we dont pass a filter, "all" should be set as default filter ', async () => {
+      const req = {
+        body: {},
+        params: { id: '' },
+        query: {
+          page: 1,
+        },
+      } as unknown as Request;
+
+      (mockProductsRepo.query as jest.Mock).mockResolvedValue([]);
+
+      await controller.getAll(req, resp, next);
+      expect(mockProductsRepo.query).toHaveBeenCalled();
+    });
+
+    test('Then if we dont pass a page, "1" should be set as default page ', async () => {
+      const req = {
+        body: {},
+        params: { id: '' },
+        query: {
+          filter: 'all',
+        },
+      } as unknown as Request;
+
+      (mockProductsRepo.query as jest.Mock).mockResolvedValue([]);
+
+      await controller.getAll(req, resp, next);
       expect(resp.json).toHaveBeenCalled();
     });
 
