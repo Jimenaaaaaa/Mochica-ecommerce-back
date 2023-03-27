@@ -7,30 +7,40 @@ const productSchema = new Schema<Product>({
     required: true,
   },
   price: {
-    type: Number,
+    type: Number || String,
     required: true,
   },
   cone: {
-    type: Number,
+    type: Number || String,
     required: true,
   },
   size: {
+    type: String || Number,
+    required: true,
+  },
+  img: {
     type: String,
     required: true,
   },
-  author: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Artist',
-    },
-  ],
+  type: {
+    type: String,
+    required: true,
+  },
+  // Add later:
+  // img: {
+  //   type: Array,
+  //   required: true,
+  // },
+  author: {
+    type: String,
+    required: true,
+  },
 });
 
 productSchema.set('toJSON', {
   transform(_document, returnedObject) {
     returnedObject.id = returnedObject._id;
     // Ver si lo del role funciona
-    delete returnedObject.role;
     delete returnedObject.__v;
     delete returnedObject._id;
   },
