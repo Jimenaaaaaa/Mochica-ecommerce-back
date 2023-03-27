@@ -22,34 +22,29 @@ export class ProductMongoRepo implements Repo<Product> {
   }
 
   async query(): Promise<Product[]> {
-    const data: Product[] = await ProductModel.find()
-      .populate('products', {
-        author: {},
-      })
-      .exec();
+    const data: Product[] = await ProductModel.find();
     return data;
   }
 
   async queryId(id: string): Promise<Product> {
     debug('queryId: ' + id);
-    const data = await ProductModel.findById(id)
-      // Problems in posman
-      .populate('products', { author: {} })
-      .exec();
+    const data = await ProductModel.findById(id);
     if (!data) throw new HTTPError(404, 'Id not found', 'Id not found');
     return data;
   }
 
-  async search(query: { key: string; value: unknown }): Promise<Product[]> {
+  async search(query: { key: string; value: string }): Promise<Product[]> {
     debug('search');
     const data: Product[] = await ProductModel.find({
       [query.key]: query.value,
-    })
+    });
 
-      // Esto me da problemas
-      .populate('owner')
-      .exec();
-    return data;
+    const result = data.map((item: any) => ({
+      ...item._doc,
+      id: item._id.toString(),
+    }));
+
+    return result;
   }
 
   async create(Product: Partial<Product>): Promise<Product> {
@@ -70,7 +65,7 @@ export class ProductMongoRepo implements Repo<Product> {
 
   async erase(id: string): Promise<void> {
     debug('erase');
-    const data = ProductModel.findByIdAndDelete(id);
+    const data = ProductModel.findByIdAndDelete(id).exec();
     if (!data)
       throw new HTTPError(404, 'Not found', 'Delete not posible: id not found');
   }
