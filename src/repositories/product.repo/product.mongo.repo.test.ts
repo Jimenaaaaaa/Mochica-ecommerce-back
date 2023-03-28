@@ -6,21 +6,6 @@ jest.mock('./product.mongo.model');
 
 describe('Given ProductMongoRepo', () => {
   const repo = ProductMongoRepo.getInstance();
-  const exec = jest.fn();
-  beforeEach(() => {
-    exec.mockResolvedValue([]);
-    ProductModel.find = jest.fn().mockReturnValue({
-      populate: jest.fn().mockReturnValue({
-        exec,
-      }),
-    });
-
-    ProductModel.findById = jest.fn().mockReturnValue({
-      populate: jest.fn().mockReturnValue({
-        exec,
-      }),
-    });
-  });
 
   describe('When it is intanced', () => {
     test('Then it should be able to be instanced.', () => {
@@ -30,17 +15,33 @@ describe('Given ProductMongoRepo', () => {
 
   describe('When we use the query() method', () => {
     test('Then it should return a Product array.', async () => {
+      (ProductModel.find as jest.Mock).mockResolvedValue([
+        {
+          name: 'test',
+        },
+      ]);
+
       const result = await repo.query();
-      expect(exec).toHaveBeenCalled();
-      expect(result).toEqual([]);
+      expect(result).toEqual([
+        {
+          name: 'test',
+        },
+      ]);
     });
   });
 
   describe('When we use the queryId() method', () => {
     test('Then if the findById method resolve value to an object, it should return the object', async () => {
+      (ProductModel.findById as jest.Mock).mockResolvedValue({
+        name: 'test',
+        id: '1',
+      });
       const result = await repo.queryId('1');
       expect(ProductModel.findById).toHaveBeenCalled();
-      expect(result).toEqual([]);
+      expect(result).toEqual({
+        name: 'test',
+        id: '1',
+      });
     });
 
     test('Then if the id is not found, it should throw an error', async () => {
@@ -52,9 +53,20 @@ describe('Given ProductMongoRepo', () => {
 
   describe('When we call the search() method', () => {
     test('Then it should return a Product array.', async () => {
+      (ProductModel.find as jest.Mock).mockResolvedValue([
+        {
+          name: 'example',
+          id: '1',
+        },
+      ]);
       const query = { key: 'name', value: 'example' };
       const result = await repo.search(query);
-      expect(result).toEqual([]);
+      expect(result).toEqual([
+        {
+          name: 'example',
+          id: '1',
+        },
+      ]);
     });
   });
 
