@@ -24,11 +24,8 @@ productsRouter.patch(
 );
 
 productsRouter.delete(
-  '/delete',
+  '/delete/:id',
   Interceptors.logged,
   // Authorized
   controller.delete.bind(controller)
 );
-
-// El filtro es un get,asi que puedo filtrarlo en el front.
-// productsRouter.get('/:filter/:type', controller.getByFilter.bind(controller)); // Este puede que lo quite

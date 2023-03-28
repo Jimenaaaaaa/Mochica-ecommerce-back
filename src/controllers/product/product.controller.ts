@@ -16,20 +16,15 @@ export class ProductController {
       debug('add-method');
 
       const newProduct = req.body;
-
-      // Ver si le meto una gestion de errores en caso de que no se metan todos los campos
-      // if (req.body.style !== 'Name' && req.body.style !== 'Artist')
-      //   throw new HTTPError(
-      //     400,
-      //     'Wrong guitar type',
-      //     'The guitar type is not Electric neither Acoustic'
-      //   );
+      debug('new Product: ', newProduct);
 
       const data = await this.ProductsRepo.create(newProduct);
+      debug(data);
       resp.status(201);
       resp.json({
         results: [data],
       });
+      debug(data);
     } catch (error) {
       next(error);
     }
@@ -38,43 +33,47 @@ export class ProductController {
   async getAll(req: Request, resp: Response, next: NextFunction) {
     try {
       debug('getAll');
-      const data = await this.ProductsRepo.query();
+
+      const filter = req.query.filter || 'all';
+
+      if (
+        filter !== 'mug' &&
+        filter !== 'vase' &&
+        filter !== 'glass' &&
+        filter !== 'plate' &&
+        filter !== 'bowl' &&
+        filter !== 'jewerly' &&
+        filter !== 'other' &&
+        filter !== 'all'
+      ) {
+        throw new HTTPError(400, 'Wrong region', 'Non existing region');
+      }
+
+      let data;
+      if (filter === 'all') {
+        data = await this.ProductsRepo.query();
+      } else {
+        data = await this.ProductsRepo.search({ key: 'type', value: filter });
+      }
+
+      const dataLength = data.length / 12;
+      const page = Number(req.query.page || '1');
+
+      if (page < 1) {
+        throw new HTTPError(400, 'Wrong page', 'Page doesnt exist');
+      }
+
+      const slicedData = data.slice((page - 1) * 12, page * 12);
       resp.json({
-        results: [data],
+        results: {
+          slicedData,
+          length: dataLength,
+          currentPage: page,
+        },
       });
     } catch (error) {
       next(error);
     }
-
-    // Veo si añado esto despues
-    // const pageString = req.query.page || '1';
-    // const pageNumber = Number(pageString);
-    // if (pageNumber < 1 || pageNumber > 5)
-    //   throw new HTTPError(
-    //     400,
-    //     'Wrong page number',
-    //     'The page number in query params is not correct'
-    //   );
-    // const style = req.query.style || 'All';
-    // if (style !== 'Electric' && style !== 'Acoustic' && style !== 'All')
-    //   throw new HTTPError(
-    //     400,
-    //     'Wrong style type',
-    //     'The style in query params is not correct'
-    //   );
-    // let productsFiltered: Product[];
-    // if (style === 'All') {
-    //   productsFiltered = await this.ProductsRepo.query();
-    // } else {
-    //   productsFiltered = await this.ProductsRepo.search({
-    //     key: 'style',
-    //     value: style,
-    //   });
-    // }
-    // const productsData = productsFiltered.slice(
-    //   (pageNumber - 1) * 5,
-    //   pageNumber * 5
-    // );
   }
 
   async getById(req: Request, resp: Response, next: NextFunction) {
@@ -101,7 +100,7 @@ export class ProductController {
       const data = await this.ProductsRepo.update(req.body);
       resp.status(201);
       resp.json({
-        results: [data],
+        results: data,
       });
     } catch (error) {
       next(error);

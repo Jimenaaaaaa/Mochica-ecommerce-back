@@ -22,11 +22,7 @@ export class UserMongoRepo implements Repo<User> {
   }
 
   async query(): Promise<User[]> {
-    const data: User[] = await UserModel.find()
-      .populate('products', {
-        cart: 0,
-      })
-      .exec();
+    const data: User[] = await UserModel.find().populate('products').exec();
     return data;
   }
 
@@ -37,11 +33,9 @@ export class UserMongoRepo implements Repo<User> {
   async search(query: { key: string; value: unknown }): Promise<User[]> {
     debug('search');
 
-    const data: User[] = await UserModel.find({ [query.key]: query.value });
-
-    // Esto me da error cuando hago login
-    // .populate('cart')
-    // .exec();
+    const data: User[] = await UserModel.find({ [query.key]: query.value })
+      .populate('products')
+      .exec();
     debug('data: ', data);
     return data;
   }

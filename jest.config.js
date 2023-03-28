@@ -11,5 +11,6 @@ export default {
     'config.ts',
     'routers',
     'entities',
+    'model.ts',
   ],
 };
