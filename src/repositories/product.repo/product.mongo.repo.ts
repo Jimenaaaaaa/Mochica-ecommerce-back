@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Repo } from '../repo.interface.js';
 import createDebug from 'debug';
 import { HTTPError } from '../../errors/error.js';
@@ -39,12 +38,7 @@ export class ProductMongoRepo implements Repo<Product> {
       [query.key]: query.value,
     });
 
-    const result = data.map((item: any) => ({
-      ...item._doc,
-      id: item._id.toString(),
-    }));
-
-    return result;
+    return data;
   }
 
   async create(Product: Partial<Product>): Promise<Product> {
@@ -65,7 +59,7 @@ export class ProductMongoRepo implements Repo<Product> {
 
   async erase(id: string): Promise<void> {
     debug('erase');
-    const data = ProductModel.findByIdAndDelete(id).exec();
+    const data = await ProductModel.findByIdAndDelete(id);
     if (!data)
       throw new HTTPError(404, 'Not found', 'Delete not posible: id not found');
   }
