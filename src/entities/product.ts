@@ -1,5 +1,3 @@
-import { Artist } from './artist';
-
 export type AddedProduct = {
   name: string;
   price: number | string;
