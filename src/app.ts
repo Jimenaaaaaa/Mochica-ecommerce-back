@@ -6,10 +6,6 @@ import morgan from 'morgan';
 import { productsRouter } from './routers/products.router.js';
 import { usersRouter } from './routers/users.router.js';
 
-// Luego meto los imports de los routers
-// import { artistsRouter } from './routers/artists.router';
-// import { productsRouter } from './routers/products.router';
-
 const debug = createDebug('FP:app');
 
 export const app = express();
@@ -31,13 +27,7 @@ app.get('/', (_req, resp) => {
     info: 'Mochica shop',
     endpoints: {
       users: '/users',
+      products: '/products'
     },
   });
 });
-
-// Luego meto el resto de routers:
-// app.use('/products', productsRouter);
-// app.use('/artists', artistsRouter);
-
-// Voy a gestionar los errores mas tarde
-// app.use(errorsMiddleware);
