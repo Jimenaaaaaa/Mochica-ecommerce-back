@@ -64,7 +64,7 @@ export class UserController {
       resp.status(202);
       resp.json({
         token,
-        user: data,
+        user: data[0],
       });
     } catch (error) {
       next(error);
