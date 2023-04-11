@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "copy-files": "copyfiles -u 1 src/public/**/*.* dist",
-    "start": "cross-env DEBUG=FP* PORT=4500 node ./dist/index.js -w",
+    "start": "cross-env DEBUG=FP* PORT=4500 node ./dist/index.js",
     "start:mon": "cross-env DEBUG=FP* PORT=4500 nodemon ./dist/index.js",
     "build": "tsc -w",
     "build:prod": "tsc",
