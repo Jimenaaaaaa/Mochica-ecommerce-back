@@ -1,63 +1,31 @@
-# Week 9 - Proyecto final
+# Ceramic Ecommerce Project
 
-Realiza una app fullstack MERN/MEAN con las siguientes características deseables:
+This is an ecommerce project where users can browse ceramic products, add them to their cart, and purchase them. Users need to register and login before adding items to their cart.
 
-## Funcionalidad
+## Features
 
-- Listado de items
-- Detalle de item (página aparte)
-- Crear item (página aparte con un formulario e imagen obligatoria con un campo tipo file)
-- Modificar item (mismo formulario que para crear)
-- Borrar item (se tiene que poder borrar desde el listado)
-- Paginación (puede ser el sistema clásico o un botón "Load more")
-- Filtros (en el propio listado, que filtre sin cambiar de página)
-- Login y registro de usuario
-- Feedbacks al usuario
-- Gestión de errores
-- Firebase (o similar) para los archivos binarios (opcionalmente como backup)
+- Users can browse available ceramic products.
+- Registered users can add products to their cart.
+- Admin users can add, edit, and delete products. (to be implemented)
+- User feedback is improved. (to be implemented)
+- An error page has been added. (to be implemented)
+- Error management. (to be implemented)
 
-## Requisitos Frontend:
+## Technologies Used
 
-- TypeScript
-- React + gestión del estado con Redux / Angular
-- moduleCSS / styled components
-- tests unitarios / de componentes (opcionalmente snapshot)
-- tests de integración
-- README con información sobre la app
-- 100% coverage
-- 0 deuda técnica
-- Lighthouse con métricas en verde
+- Front-end: React-Redux, Firebase for image storage, and Sass for styling.
+- Back-end: MongoDB for data storage, Express and Node.js.
 
-## Requisitos Backend:
+## Getting Started
 
-- TypeScript
-- Node + Express
-- auth con JWT
-- tests unitarios
-- tests de endpoints (supertest)
-- guardado de archivos binarios en disco duro / Firebase (o similar)
+To get started, you will need to have Node.js and MongoDB installed on your local machine. Once you have cloned this repository, run `npm install` to install the required dependencies.
 
-- optimización de imágenes (sharp)
-- validación de requests con Joi
+You will also need to create a `.env` file in the root directory and add the following:
 
-- README con información de uso y con endpoints (de cada endpoint método, url, body y response)
-- 100% coverage
-- 0 deuda técnica
-- Colección de endpoints de Postman exportada como JSON (en el root del proyecto)
+MONGO_URI=<your_mongo_uri>
 
-## E2E:
+To start the project, run `npm run build` and `npm run start` in the terminal. The project will initially run on `http://localhost:4500`.
 
-Proceso de login de usuario testado con Cypress
+## Info
 
-## Check diario:
-
-- daily meeting (qué tareas hice ayer, qué stoppers tuve, qué tareas haré hoy)
-- informes de sonar sobre la rama principal, front y back
-- >= 80% cover
-
-## Challenge inicial
-
-- Figma
-- Responsabilidades de los componentes
-- Rutas del backend
-- Trello (backlog completo)
+This was my final project created in ISDI Coders Full Stack Developer bootcamp. 
