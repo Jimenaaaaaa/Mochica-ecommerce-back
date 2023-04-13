@@ -4,9 +4,8 @@ This is an ecommerce project where users can browse ceramic products, add them t
 
 ## Features
 
-- Users can browse available ceramic products.
-- Registered users can add products to their cart.
-- Admin users can add, edit, and delete products. (to be implemented)
+- Users can browse available ceramic products and filter them by artist or by type of ceramic.
+- Registered users can add products to their cart, and perform CRUD operations with the products.
 - User feedback is improved. (to be implemented)
 - An error page has been added. (to be implemented)
 - Error management. (to be implemented)
